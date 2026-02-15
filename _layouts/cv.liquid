@@ -80,7 +80,19 @@ layout: default
               {% if cv.email %}
                 <tr>
                   <td class="p-1 pr-2 font-weight-bold"><b>Email</b></td>
-                  <td class="p-1 pl-2 font-weight-light">{{ cv.email }}</td>
+                  {% if site.protect_email %}
+                    {% assign email_parts = cv.email | split: '@' %}
+                    <td class="p-1 pl-2 font-weight-light">
+                      <span class="email-protect" data-eu="{{ email_parts[0] }}" data-ed="{{ email_parts[1] }}">
+                        <span class="email-text">{{ email_parts[0] }}</span><span class="email-sep"> [at] </span>
+                        {%- assign domain_parts = email_parts[1] | split: '.' -%}
+                        <span class="email-text">{{ domain_parts[0] }}</span><span class="email-sep"> [dot] </span
+                        ><span class="email-text">{{ domain_parts[1] }}</span>
+                      </span>
+                    </td>
+                  {% else %}
+                    <td class="p-1 pl-2 font-weight-light">{{ cv.email }}</td>
+                  {% endif %}
                 </tr>
               {% endif %}
               {% if cv.phone %}
@@ -220,7 +232,19 @@ layout: default
               {% if basics.email %}
                 <tr>
                   <td class="p-1 pr-2 font-weight-bold"><b>Email</b></td>
-                  <td class="p-1 pl-2 font-weight-light">{{ basics.email }}</td>
+                  {% if site.protect_email %}
+                    {% assign email_parts = basics.email | split: '@' %}
+                    <td class="p-1 pl-2 font-weight-light">
+                      <span class="email-protect" data-eu="{{ email_parts[0] }}" data-ed="{{ email_parts[1] }}">
+                        <span class="email-text">{{ email_parts[0] }}</span><span class="email-sep"> [at] </span>
+                        {%- assign domain_parts = email_parts[1] | split: '.' -%}
+                        <span class="email-text">{{ domain_parts[0] }}</span><span class="email-sep"> [dot] </span
+                        ><span class="email-text">{{ domain_parts[1] }}</span>
+                      </span>
+                    </td>
+                  {% else %}
+                    <td class="p-1 pl-2 font-weight-light">{{ basics.email }}</td>
+                  {% endif %}
                 </tr>
               {% endif %}
               {% if basics.phone %}
