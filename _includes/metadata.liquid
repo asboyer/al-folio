@@ -194,6 +194,9 @@
       {% when 'strava_userid' %}
         {% capture link %}https://www.strava.com/athletes/{{ social[1] }}{% endcapture %}
         {% assign sameaslinks = sameaslinks | push: link %}
+      {% when 'substack_username' %}
+        {% capture link %}https://{{ social[1] }}.substack.com{% endcapture %}
+        {% assign sameaslinks = sameaslinks | push: link %}
       {% when 'telegram_username' %}
         {% capture link %}https://telegram.me/{{ social[1] }}{% endcapture %}
         {% assign sameaslinks = sameaslinks | push: link %}
