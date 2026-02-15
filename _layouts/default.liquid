@@ -16,7 +16,12 @@
   </head>
 
   <!-- Body -->
-  <body class="{% if site.navbar_fixed %}fixed-top-nav{% endif %} {% unless site.footer_fixed %}sticky-bottom-footer{% endunless %}">
+  <body
+    class="{% if site.navbar_fixed %}fixed-top-nav{% endif %} {% unless site.footer_fixed %}sticky-bottom-footer{% endunless %}"
+    {% if site.protect_email %}
+      data-protect-email="true"
+    {% endif %}
+  >
     <!-- Header -->
     {% include header.liquid %}
 

@@ -60,6 +60,9 @@ socials_in_search: true
 posts_in_search: true
 bib_search: true
 
+# Email obfuscation
+protect_email: true # set to true to obfuscate emails and copy to clipboard on click instead of opening mailto
+
 # Dimensions
 max_width: 930px
 
