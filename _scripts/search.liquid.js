@@ -102,6 +102,7 @@ ninja.data = [
   {%- endfor -%}
   {%- if site.socials_in_search -%}
     {%- for social in site.data.socials -%}
+      {%- assign social_handler = nil -%}
       {%- case social[0] -%}
         {%- when "acm_id" -%}
           {%- assign social_id = "social-acm" -%}
@@ -134,7 +135,13 @@ ninja.data = [
         {%- when "email" -%}
           {%- assign social_id = "social-email" -%}
           {%- assign social_title = "email" -%}
-          {%- capture social_url %}"mailto:{{ social[1] | encode_email }}"{% endcapture -%}
+          {%- if site.protect_email -%}
+            {%- assign email_parts = social[1] | split: '@' -%}
+            {%- capture social_url %}"#"{% endcapture -%}
+            {%- capture social_handler %}function() { var e="{{ email_parts[0] }}"+"@"+"{{ email_parts[1] }}"; navigator.clipboard.writeText(e); showEmailCopiedToast(); }{% endcapture -%}
+          {%- else -%}
+            {%- capture social_url %}"mailto:{{ social[1] | encode_email }}"{% endcapture -%}
+          {%- endif -%}
         {%- when "facebook_id" -%}
           {%- assign social_id = "social-facebook" -%}
           {%- assign social_title = "Facebook" -%}
@@ -304,7 +311,11 @@ ninja.data = [
         title: '{{ social_title }}',
         section: 'Socials',
         handler: () => {
-          window.open({{ social_url }}, "_blank");
+          {%- if social_handler -%}
+            ({{ social_handler }})();
+          {%- else -%}
+            window.open({{ social_url }}, "_blank");
+          {%- endif -%}
         },
       },
     {%- endfor -%}
